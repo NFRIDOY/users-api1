@@ -2,27 +2,26 @@
 const postList = document.getElementById("post-list");
 const userName = document.getElementById("userName");
 
-function getResponse(url, callback) {
+function getResponse(url, callback, key, perentIdElement, childElement) {
     fetch(url)
         .then((response) => response.json())
-        .then((data) => callback(data))
+        .then((data) => callback(data, key, perentIdElement, childElement))
 }
-
-
+function showData(data, key, perentIdElement, childElement) {
+    const perentId = document.getElementById(perentIdElement);
+    for (const post of data) {
+        const child = document.createElement(childElement);
+        child.innerText = post[key];
+        perentId.appendChild(child);
+        console.log(data)
+    }
+}
 
 function showPost() {
-    // console.log("Show Post Btn");
-
-    getResponse("https://jsonplaceholder.typicode.com/posts", showData);
-
-    // fetch('https://jsonplaceholder.typicode.com/todos/1')
-    // fetch("https://jsonplaceholder.typicode.com/users")
-    // fetch("https://jsonplaceholder.typicode.com/posts")
-    //     .then(response => response.json())
-    //     // .then(data => console.log(data))
-    //     .then(data => showData(data))
+    // getResponse("", showData, "", "", "HTML_ELEMNT" );
+    getResponse("https://jsonplaceholder.typicode.com/posts", showData, "title", "post-list", "li" );
 }
-function showData(data) {
+function showData1(data) {
     for (const post of data) {
         const li = document.createElement("li");
         li.innerText = post.title;
@@ -31,3 +30,10 @@ function showData(data) {
 
     }
 }
+
+ // fetch('https://jsonplaceholder.typicode.com/todos/1')
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    // fetch("https://jsonplaceholder.typicode.com/posts")
+    //     .then(response => response.json())
+    //     // .then(data => console.log(data))
+    //     .then(data => showData(data))
